@@ -2,6 +2,50 @@
 <head>
 <style>
 .error {color: #FF0000;}
+body {
+    
+    background-color: teal; 
+}
+ input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+ input[type=password], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+input[type=submit] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+div {
+    margin-bottom:100px ;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding:20px;    
+    
+}
 </style>
 </head>
 <body>
@@ -37,16 +81,17 @@ function test_input($data) {
 }
 
 ?>
+<div>
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-Health Center E-mail:
+Health Center E-mail:<span class="error">* <?php echo $emailErr;?></span>
 <input type="text" name="email">
-<span class="error">* <?php echo $emailErr;?></span>
 <br><br>
-Password: <input type="password" name="password">
-<span class="error">* <?php echo $passwordErr;?></span>
+Password: <span class="error">* <?php echo $passwordErr;?></span>
+<input type="password" name="password">
 <br><br>
 <input type="submit" name="submit" value="Submit">
 </form>
+</div>
 <?php
 $dbhost = 'localhost:3306';
 $dbuser = 'root';
