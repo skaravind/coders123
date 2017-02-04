@@ -52,7 +52,7 @@ div {
 <?php
 
 $emailErr = $passwordErr = "";
-$name = $email = $health = $contact = $password = "";
+ $email =$password = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   
@@ -100,8 +100,9 @@ session_start();
 $con = mysql_connect($dbhost,$dbuser,$dbpass);
 
 mysql_select_db('healthkit');
-$query = mysql_query("SELECT *  FROM health where Email = '$email' AND Password = MD5('$password')");
-	$row = mysql_fetch_array($query) or die(mysql_error());
+$query = "SELECT *  FROM health where Email = '$email' AND Password = MD5('$password')";
+$sql = mysql_query($query,$con);
+	$row = mysql_fetch_array($sql);
 	if(!empty($row['Email']) AND !empty($row['Password']))
 	{
 		$_SESSION['Email'] = $row['Password'];
