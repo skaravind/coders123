@@ -7,6 +7,14 @@
 <body>
 <?php
 
+$dbhost = 'localhost:3306';
+$dbuser = 'root';
+$dbpass = 'root';
+$dbname = 'healthkit';
+
+$con = mysql_connect($dbhost,$dbuser,$dbpass,$dbname);
+
+
 $nameErr = $emailErr = $healthErr = $contactErr = $passwordErr = "";
 $name = $email = $health = $contact = $password = "";
 
@@ -60,6 +68,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
 
 }
+$sql='insert into health values($name,$email,$center,$contact,$password)';
+$result = mysql_query($sql);
+if($result){
+	echo "You are registered";
+}
+	
 
 function test_input($data) {
   $data = trim($data);
