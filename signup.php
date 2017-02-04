@@ -7,12 +7,7 @@
 <body>
 <?php
 
-$dbhost = 'localhost:3306';
-$dbuser = 'root';
-$dbpass = 'root';
-$dbname = 'healthkit';
 
-$con = mysql_connect($dbhost,$dbuser,$dbpass,$dbname);
 
 
 $nameErr = $emailErr = $healthErr = $contactErr = $passwordErr = "";
@@ -49,32 +44,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }    
   }
 
-  if (empty($_POST["comment"])) {
-    $comment = "";
+  if (empty($_POST["health"])) {
+    $health = "";
   } else {
-    $comment = test_input($_POST["comment"]);
+    $health = test_input($_POST["health"]);
   }
   if(empty($_POST["passsword"])){
     $passwordErr="Enter Password";
   } else {
-     if(strlen($password)<8)
-	 {
-	 $passwordErr = "Minimum 8 characters required";
-	 }
-	 else{
-     $password = $_POST["password"];
-	 }
+     $password = test_input($_POST["password"]);
 	 
   }
+  echo $name." ".$email." ".$health." ".$contact." ".$password;
 
-}
-$sql='insert into health values($name,$email,$center,$contact,$password)';
-$result = mysql_query($sql);
-if($result){
-	echo "You are registered";
 }
 	
-
 function test_input($data) {
   $data = trim($data);
   $data = stripslashes($data);
@@ -103,5 +87,19 @@ Password: <input type="password" name="password">
 <br><br>
 <input type="submit" name="submit" value="Submit">
 </form>
+<?php
+$dbhost = 'localhost:3306';
+$dbuser = 'root';
+$dbpass = 'root';
+
+$con = mysql_connect($dbhost,$dbuser,$dbpass);
+
+mysql_select_db('healthkit');
+$sql="insert into health values('$name','$email','$health','$contact',MD5('$password'))";
+$result = mysql_query($sql, $con);
+if($result){
+	echo "You are registered";
+}
+?>
 </body>
 </html>

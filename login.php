@@ -47,6 +47,26 @@ Password: <input type="password" name="password">
 <br><br>
 <input type="submit" name="submit" value="Submit">
 </form>
-</body>
+<?php
+$dbhost = 'localhost:3306';
+$dbuser = 'root';
+$dbpass = 'root';
+session_start();   
+$con = mysql_connect($dbhost,$dbuser,$dbpass);
+
+mysql_select_db('healthkit');
+$query = mysql_query("SELECT *  FROM health where Email = '$email' AND Password = MD5('$password')");
+	$row = mysql_fetch_array($query) or die(mysql_error());
+	if(!empty($row['Email']) AND !empty($row['Password']))
+	{
+		$_SESSION['Email'] = $row['Password'];
+		echo "SUCCESSFULLY LOGIN TO USER PROFILE PAGE...";
+
+	}
+	else
+	{
+		echo "SORRY... YOU ENTERD WRONG ID AND PASSWORD... PLEASE RETRY...";
+	}
+?>
 </body>
 </html>
