@@ -18,7 +18,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$doctor = $_POST["doctor"];
 	$overall = $_POST["overall"];	
 }
-echo $staff." ".$food;
 ?>
 <h1 style="text-align : center;">FEEDBACK FORM</h1>
 <hr>
@@ -62,5 +61,16 @@ echo $staff." ".$food;
 <input type="radio" name="overall" value = "5">Very Good</p>
 <br><br>
 <input type = "submit" value="submit">
+<?php
+$dbhost = 'localhost:3306';
+$dbuser = 'root';
+$dbpass = 'root';
+
+$con = mysql_connect($dbhost,$dbuser,$dbpass);
+
+mysql_select_db('healthkit');
+$sql = "insert into feedback(a,b,c,d,e,f) values('$staff','$facilities','$hygine','$food','$doctor','$overall')";
+mysql_query($sql,$con);
+?>
 </body>
 </html>
