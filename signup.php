@@ -39,13 +39,11 @@ input[type=submit] {
 input[type=submit]:hover {
     background-color: #45a049;
 }
-
 div {
-    margin-bottom:100px ;
+    margin-bottom: 100px;
     border-radius: 5px;
     background-color: #f2f2f2;
     padding:20px;    
-    height :700px;
 	width:400px;
 }
 </style>
@@ -114,7 +112,7 @@ function test_input($data) {
 
 ?>
 
-<div>
+<div style="margin:auto">
 <h1>SIGN UP</h1>
 <hr>
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">

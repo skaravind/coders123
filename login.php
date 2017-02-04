@@ -44,7 +44,7 @@ div {
     border-radius: 5px;
     background-color: #f2f2f2;
     padding:20px;    
-    
+    width:400px;
 }
 </style>
 </head>
@@ -81,7 +81,9 @@ function test_input($data) {
 }
 
 ?>
-<div>
+<div style="margin:auto">
+<h1 style="text-align:center"> LOGIN </h1>
+<hr>
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 Health Center E-mail:<span class="error">* <?php echo $emailErr;?></span>
 <input type="text" name="email">
