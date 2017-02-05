@@ -97,15 +97,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 SUBMIT
 </button>
 <?php
-$dbhost = 'localhost:3306';
+$dbhost = 'localhost:111';
 $dbuser = 'root';
-$dbpass = 'root';
+$dbpass = 'Chunmun26';
 
-$con = mysql_connect($dbhost,$dbuser,$dbpass);
+$con = mysqli_connect($dbhost,$dbuser,$dbpass);
 
-mysql_select_db('healthkit');
-$sql = "insert into feedback(a,b,c,d,e,f) values('$staff','$facilities','$hygine','$food','$doctor','$overall')";
-mysql_query($sql,$con);
+mysqli_select_db($con,'healthkit');
+$sql = "insert into feedback(a, b, c, d, e, f) values( '$staff','$facilities','$hygine','$food','$doctor','$overall')";
+mysqli_query($con,$sql);
 ?>
 </form>
 </div>
