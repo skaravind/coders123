@@ -111,10 +111,6 @@ $sql = mysqli_query($con,$query);
 		echo "SUCCESSFULLY LOGIN TO USER PROFILE PAGE...";
 
 	}
-	else
-	{
-		echo "SORRY... YOU ENTERD WRONG ID AND PASSWORD... PLEASE RETRY...";
-	}
 ?>
 </body>
 </html>
