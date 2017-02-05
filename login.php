@@ -108,12 +108,12 @@ $sql = mysql_query($query,$con);
 	if(!empty($row['Email']) AND !empty($row['Password']))
 	{
 		$_SESSION['Email'] = $row['Password'];
-		echo "SUCCESSFULLY LOGIN TO USER PROFILE PAGE...";
+		header('Location:feedback.php');
 
 	}
 	else
 	{
-		echo "SORRY... YOU ENTERD WRONG ID AND PASSWORD... PLEASE RETRY...";
+		echo "YOU ENTERED WRONG ID AND PASSWORD";
 	}
 ?>
 </body>
