@@ -95,25 +95,25 @@ Password: <span class="error">* <?php echo $passwordErr;?></span>
 </form>
 </div>
 <?php
-$dbhost = 'localhost:3306';
+$dbhost = 'localhost:111';
 $dbuser = 'root';
-$dbpass = 'root';
+$dbpass = 'Chunmun26';
 session_start();   
-$con = mysql_connect($dbhost,$dbuser,$dbpass);
+$con = mysqli_connect($dbhost,$dbuser,$dbpass);
 
-mysql_select_db('healthkit');
+mysqli_select_db( $con,'healthkit');
 $query = "SELECT *  FROM health where Email = '$email' AND Password = MD5('$password')";
-$sql = mysql_query($query,$con);
-	$row = mysql_fetch_array($sql);
+$sql = mysqli_query($con,$query);
+	$row = mysqli_fetch_array($sql);
 	if(!empty($row['Email']) AND !empty($row['Password']))
 	{
 		$_SESSION['Email'] = $row['Password'];
-		header('Location:feedback.php');
+		echo "SUCCESSFULLY LOGIN TO USER PROFILE PAGE...";
 
 	}
 	else
 	{
-		echo "YOU ENTERED WRONG ID AND PASSWORD";
+		echo "SORRY... YOU ENTERD WRONG ID AND PASSWORD... PLEASE RETRY...";
 	}
 ?>
 </body>
