@@ -2,7 +2,39 @@
 <head>
 <style>
 p{
-	word-spacing:30px;
+	
+	line-height: 235%;
+}
+body {
+	background-color: teal;
+}
+div {
+	border-radius: 25px;
+	width:600px; height:600px; 
+	background-color:white; 
+	margin:auto;
+	padding: 15px;
+}
+.button {
+    border-radius: 10px;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    background-color: #008CBA;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-left: 230px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+.button:hover {
+    background-color: white;
+    color: black;
+}
+input[type="radio"]{
+  margin: 0px 0px 10px 50px;
 }
 </style>
 </head>
@@ -19,8 +51,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$overall = $_POST["overall"];	
 }
 ?>
-<h1 style="text-align : center;">FEEDBACK FORM</h1>
+<h1 style="text-align : center;color:white;">FEEDBACK FORM</h1>
 <hr>
+<div>
 <form method = "post" action = "<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>">
 <b>1. Staff Behavior</b>
 <br>
@@ -60,7 +93,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <input type="radio" name="overall" value = "4">Good
 <input type="radio" name="overall" value = "5">Very Good</p>
 <br><br>
-<input type = "submit" value="submit">
+<button class="button" type="submit">
+SUBMIT
+</button>
 <?php
 $dbhost = 'localhost:3306';
 $dbuser = 'root';
@@ -72,5 +107,7 @@ mysql_select_db('healthkit');
 $sql = "insert into feedback(a,b,c,d,e,f) values('$staff','$facilities','$hygine','$food','$doctor','$overall')";
 mysql_query($sql,$con);
 ?>
+</form>
+</div>
 </body>
 </html>
