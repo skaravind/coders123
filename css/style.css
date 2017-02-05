@@ -10,9 +10,9 @@ img {
 }
 /** box-shadow **/
 .box {
-	background-color: #e7e7e7; /* Needed for IE */
+	background-color: #e7e7e7; /*Needed for IE */
 	display: inline-block;
-	-moz-box-shadow: 0 0 1px 3px rgba(207, 207, 207, 0.6);
+	-moz-box-shadow: 0 0 1px 3px rgba(300, 300, 300, 0.6);
 	-webkit-box-shadow: 0 0 1px 3px rgba(207, 207, 207, 0.6);
 	box-shadow: 0 0 1px 3px rgba(207, 207, 207, 0.6);
 	/* For IE 5.5 - 7 */
