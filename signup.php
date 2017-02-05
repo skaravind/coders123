@@ -99,7 +99,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
      $password = test_input($_POST["password"]);
 	 
   }
-  echo $name." ".$email." ".$health." ".$contact." ".$password;
 
 }
 	
@@ -147,7 +146,7 @@ mysql_select_db('healthkit');
 $sql="insert into health values('$name','$email','$health','$contact',MD5('$password'))";
 $result = mysql_query($sql, $con);
 if($result){
-	echo "You are registered";
+	header('Location:registered.php');
 }
 $sql1="insert into crecidentials values('$email',MD5('$password'))";
 $result = mysql_query($sql1, $con);
