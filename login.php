@@ -85,7 +85,7 @@ function test_input($data) {
 <h1 style="text-align:center"> LOGIN </h1>
 <hr>
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-Health Center E-mail:<span class="error">* <?php echo $emailErr;?></span>
+Health Center E-mail:<span class="error">*<?php echo $emailErr;?></span>
 <input type="text" name="email">
 <br><br>
 Password: <span class="error">* <?php echo $passwordErr;?></span>
@@ -97,24 +97,19 @@ Password: <span class="error">* <?php echo $passwordErr;?></span>
 <?php
 $dbhost = 'localhost:3306';
 $dbuser = 'root';
-$dbpass = 'root';
+$dbpass = '';
 session_start();   
 $con = mysql_connect($dbhost,$dbuser,$dbpass);
-
 mysql_select_db('healthkit');
-$query = "SELECT *  FROM health where Email = '$email' AND Password = MD5('$password')";
+$query = "SELECT *  FROM health where email = '$email' AND password = MD5('$password')";
 $sql = mysql_query($query,$con);
-	$row = mysql_fetch_array($sql);
-	if(!empty($row['Email']) AND !empty($row['Password']))
-	{
-		$_SESSION['Email'] = $row['Password'];
-		header('Location:feedback.php');
+$row = mysql_fetch_assoc($sql);
+if(empty($row['email']) AND !empty($row['password']))
+{
+	$_SESSION['email'] = $row['password'];
+	header('Location:feedback.php');
+}
 
-	}
-	else
-	{
-		echo "YOU ENTERED WRONG ID AND PASSWORD";
-	}
 ?>
 </body>
 </html>

@@ -115,18 +115,18 @@ function test_input($data) {
 <h1>SIGN UP</h1>
 <hr>
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-Name : <input type="text" name="name" size="40">
+Name of Health Center: <input type="text" name="name" size="40">
 <span class="error">* <?php echo $nameErr;?></span>
 <br><br>
 E-mail:
 <input type="text" name="email">
 <span class="error">* <?php echo $emailErr;?></span>
 <br><br>
-Health center:
+Address:
 <input type="text" name="health">
 <span class="error">*<?php echo $healthErr;?></span>
 <br><br>
-contact: <input type="text" name="contact">
+Contact: <input type="text" name="contact">
 <span class="error">*<?php echo $contactErr;?></span>
 <br><br>
 Password: <input type="password" name="password">
@@ -138,18 +138,16 @@ Password: <input type="password" name="password">
 <?php
 $dbhost = 'localhost:3306';
 $dbuser = 'root';
-$dbpass = 'root';
+$dbpass = '';
 
 $con = mysql_connect($dbhost,$dbuser,$dbpass);
 
 mysql_select_db('healthkit');
-$sql="insert into health values('$name','$email','$health','$contact',MD5('$password'))";
-$result = mysql_query($sql, $con);
+$sql="insert into health(name,email,address,contact,password) values('$name','$email','$health','$contact',MD5('$password'))";
+$result = mysql_query($sql,$con);
 if($result){
 	header('Location:registered.php');
 }
-$sql1="insert into crecidentials values('$email',MD5('$password'))";
-$result = mysql_query($sql1, $con);
 ?>
 </body>
 </html>
