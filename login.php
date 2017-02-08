@@ -115,6 +115,8 @@ if(!empty($row))
   $_SESSION["name"] = $arr['name'];
   header('Location:feedback.php');
 }
+else
+echo 'NOPE';
 }
 ?>
 </body>
