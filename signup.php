@@ -90,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   } else {
     $health = test_input($_POST["health"]);
   }
-  if(!empty($_POST["passsword"])){
+  if(!empty($_POST["password"])){
     $password = $_POST["password"];
 	}
 $dbhost = 'localhost:3306';
