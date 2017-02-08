@@ -52,7 +52,7 @@ div {
 <?php
 
 $emailErr = $passwordErr = "";
- $email =$password = "";
+$email = $password = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   
@@ -65,12 +65,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $emailErr = "Invalid email format";
     }
   }
-  if(empty($_POST["passsword"])){
-    $passwordErr="Enter Password";
+  if(!empty($_POST["password"]))
+  {
+    $password = $_POST["password"];
   }
-	 else{
-     $password = $_POST["password"];
-	 }
+	
+     
 	 
   }
 function test_input($data) {
@@ -89,27 +89,33 @@ Health Center E-mail:<span class="error">*<?php echo $emailErr;?></span>
 <input type="text" name="email">
 <br><br>
 Password: <span class="error">* <?php echo $passwordErr;?></span>
-<input type="password" name="password">
+<input type="password" name="password" required>
 <br><br>
 <input type="submit" name="submit" value="Submit">
 </form>
 </div>
 <?php
+session_start(); 
+
 $dbhost = 'localhost:3306';
 $dbuser = 'root';
 $dbpass = '';
-session_start();   
+  
 $con = mysql_connect($dbhost,$dbuser,$dbpass);
 mysql_select_db('healthkit');
-$query = "SELECT *  FROM health where email = '$email' AND password = MD5('$password')";
+
+if(empty($nameErr)&&empty($passwordErr)){
+$query = "SELECT * FROM health where email = '$email' AND password = md5('$password')";
 $sql = mysql_query($query,$con);
 $row = mysql_fetch_assoc($sql);
-if(empty($row['email']) AND !empty($row['password']))
+if(!empty($row))
 {
-	$_SESSION['email'] = $row['password'];
-	header('Location:feedback.php');
+  $yo = mysql_query("select name from health where email = '$email'",$con);
+  $arr = mysql_fetch_assoc($yo);
+  $_SESSION["name"] = $arr['name'];
+  header('Location:feedback.php');
 }
-
+}
 ?>
 </body>
 </html>

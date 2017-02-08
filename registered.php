@@ -1,9 +1,13 @@
 <html>
 <head></head>
 <body>
-<p>You are Registered</p>
+<h1> 
+<?php session_start(); 
+echo $_SESSION["user"]?> Registered !!
+
+</h1>
 <br><br>
-<a href="login.php">Login</a>
+<h3><a href="login.php">Login</a></h3>
 
 </body>
 

@@ -51,9 +51,6 @@ div {
 <body>
 <?php
 
-
-
-
 $nameErr = $emailErr = $healthErr = $contactErr = $passwordErr = "";
 $name = $email = $health = $contact = $password = "";
 
@@ -89,16 +86,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
 
   if (empty($_POST["health"])) {
-    $health = "";
+    $healthErr = "Address is reqd";
   } else {
     $health = test_input($_POST["health"]);
   }
-  if(empty($_POST["passsword"])){
-    $passwordErr="Enter Password";
-  } else {
-     $password = test_input($_POST["password"]);
-	 
+  if(!empty($_POST["passsword"])){
+    $password = $_POST["password"];
+	}
+$dbhost = 'localhost:3306';
+$dbuser = 'root';
+$dbpass = '';
+session_start();
+$con = mysql_connect($dbhost,$dbuser,$dbpass);
+mysql_select_db('healthkit');
+if(empty($nameErr)&&empty($emailErr)&&empty($contactErr)&&empty($healthErr)&&empty($passwordErr))
+{
+  $sql="insert into health(name,email,address,contact,password) values('$name','$email','$health','$contact',md5('$password'))";
+  $result = mysql_query($sql,$con);
+  if($result){
+    $_SESSION["user"] = $name;
+    header('Location:registered.php');
   }
+}
 
 }
 	
@@ -129,25 +138,11 @@ Address:
 Contact: <input type="text" name="contact">
 <span class="error">*<?php echo $contactErr;?></span>
 <br><br>
-Password: <input type="password" name="password">
-<span class="error">* <?php echo $nameErr;?></span>
+Password: <input type="password" name="password" required>
+<span class="error">* <?php echo $passwordErr;?></span>
 <br><br>
 <input type="submit" name="submit" value="Submit">
 </form>
 </div>
-<?php
-$dbhost = 'localhost:3306';
-$dbuser = 'root';
-$dbpass = '';
-
-$con = mysql_connect($dbhost,$dbuser,$dbpass);
-
-mysql_select_db('healthkit');
-$sql="insert into health(name,email,address,contact,password) values('$name','$email','$health','$contact',MD5('$password'))";
-$result = mysql_query($sql,$con);
-if($result){
-	header('Location:registered.php');
-}
-?>
 </body>
 </html>
