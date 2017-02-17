@@ -50,26 +50,60 @@ div {
 </head>
 <body>
 <?php
-
-$emailErr = $passwordErr = "";
+  header('Refresh:login.php');
+$emailErr = $passwordErr = $errmsg = "";
 $email = $password = "";
+$error=0;
+$noerror=1;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   
   
   if (empty($_POST["email"])) {
+	  $noerror=0;
     $emailErr = "Email is required";
   } else {
     $email = test_input($_POST["email"]);
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+		$noerror=0;
       $emailErr = "Invalid email format";
     }
   }
-  if(!empty($_POST["password"]))
+  if(empty($_POST["password"]))
   {
-    $password = $_POST["password"];
+	  $noerror=0;
+    $passwordErr = "Password is required";
+  }
+  else{
+	  $password = test_input($_POST["password"]);
   }
 	
+	
+$dbhost = 'localhost:3306';
+$dbuser = 'root';
+$dbpass = 'root';
+  
+$con = mysql_connect($dbhost,$dbuser,$dbpass);
+mysql_select_db('healthkit');
+
+if(empty($nameErr)&&empty($passwordErr)){
+$query = "SELECT * FROM health where email = '$email' AND password = md5('$password')";
+$sql = mysql_query($query,$con);
+$row = mysql_fetch_assoc($sql);
+$cou = mysql_num_rows($sql);
+if(!empty($row))
+{
+  	$yo = mysql_query("select name from health where email = '$email'",$con);
+  $arr = mysql_fetch_assoc($yo);
+  $_SESSION["name"] = $arr['name'];
+  header('Location:feedback.php');
+}
+if($cou!=1&&$noerror==1)
+{
+  $error = 1;
+  $errmsg = "Invalid email or Password";
+}
+}
      
 	 
   }
@@ -80,42 +114,35 @@ function test_input($data) {
   return $data;
 }
 
+
+
+
 ?>
 <div style="margin:auto">
 <h1 style="text-align:center"> LOGIN </h1>
 <hr>
+<?php
+if($error&&$noerror)
+{
+?>
+  <span class="error"><?php echo $errmsg; ?></span>
+<?php
+}
+?>
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 Health Center E-mail:<span class="error">*<?php echo $emailErr;?></span>
 <input type="text" name="email">
 <br><br>
 Password: <span class="error">* <?php echo $passwordErr;?></span>
-<input type="password" name="password" required>
+<input type="password" name="password">
 <br><br>
 <input type="submit" name="submit" value="Submit">
+<br>
+<p>Not Registered?...<a href = "signup.php" style = "text-decoration:none;">Sign Up</a></p>
 </form>
 </div>
 <?php
-session_start(); 
 
-$dbhost = 'localhost:3306';
-$dbuser = 'root';
-$dbpass = '';
-  
-$con = mysql_connect($dbhost,$dbuser,$dbpass);
-mysql_select_db('healthkit');
-
-if(empty($nameErr)&&empty($passwordErr)){
-$query = "SELECT * FROM health where email = '$email' AND password = md5('$password')";
-$sql = mysql_query($query,$con);
-$row = mysql_fetch_assoc($sql);
-if(!empty($row))
-{
-  $yo = mysql_query("select name from health where email = '$email'",$con);
-  $arr = mysql_fetch_assoc($yo);
-  $_SESSION["name"] = $arr['name'];
-  header('Location:feedback.php');
-}
-}
 ?>
 </body>
 </html>

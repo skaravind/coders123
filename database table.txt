@@ -1,0 +1,23 @@
+create database healthkit;
+
+CREATE TABLE health (
+   id int(11) NOT NULL AUTO_INCREMENT,
+   name varchar(255) NOT NULL,
+   email varchar(255) NOT NULL,
+   password varchar(255) NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE (email)
+);
+
+CREATE TABLE feedback (
+   id int(11) NOT NULL AUTO_INCREMENT,
+   a int(11) NOT NULL,
+   b int(11) NOT NULL,
+   c int(11) NOT NULL,
+   d int(11) NOT NULL,
+   e int(11) NOT NULL,
+   f int(11) NOT NULL,
+   
+  PRIMARY KEY (id),
+);
+
