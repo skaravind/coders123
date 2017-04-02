@@ -124,7 +124,7 @@ img {
 }
 /*------------ HEADER ------------*/
 #header {
-	background: #4e5944 url(../images/bg-header.jpg) repeat-x left bottom;
+	background: teal  repeat-x left bottom;
 	padding: 40px 0 46px;
 }
 /** logo **/
@@ -205,12 +205,12 @@ h2 {
 	text-transform: uppercase;
 }
 p {
-	color: #626262;
+	color: darkslategrey;
 	font: 14px/24px Arial, Helvetica, sans-serif;
 	margin: 0 0 24px;
 }
 p a {
-	color: #626262;
+	color: #ffffff;
 }
 p a:hover {
 	color: #333333;
@@ -547,7 +547,7 @@ p a:hover {
 }
 /*------------ FOOTER ------------*/
 #footer {
-	background: #d9d9d9 url(../images/bg-footer.png) repeat-x left top;
+	background: teal repeat-x left top;
 	border-top: 2px solid #fff;
 }
 #footer .section {
@@ -558,7 +558,7 @@ p a:hover {
 	padding: 30px;
 }
 #footer .section h4 {
-	color: #626262;
+	color: #ffffff;
 	font: bold 12px/24px Arial, Helvetica, sans-serif;
 	margin: 0;
 	text-transform: uppercase;
@@ -598,15 +598,4 @@ p a:hover {
 	width: 18px;
 	margin-right: 6px;
 }
-#footnote .connect a.facebook {
-	background-position: 0 -112px;
-}
-#footnote .connect a.twitter {
-	background-position: 0 -140px;
-}
-#footnote .connect a.googleplus {
-	background-position: 0 -168px;
-}
-#footnote .connect a.pinterest {
-	background-position: 0 -196px;
-}
+

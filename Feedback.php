@@ -40,6 +40,7 @@ input[type="radio"]{
 </head>
 <body>
 <?php
+session_start();
 $staff = $facilities = $hygine = $food = $doctor = $overall  = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -50,62 +51,67 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$doctor = $_POST["doctor"];
 	$overall = $_POST["overall"];	
 }
+
+echo "WELCOME ". $_SESSION["name"];
 ?>
 <h1 style="text-align : center;color:white;">FEEDBACK FORM</h1>
 <hr>
 <div>
-<form method = "post" action = "<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>">
+<form method = "post" action = "<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?> " >
 <b>1. Staff Behavior</b>
 <br>
-<p><input type="radio" name="staff" value = "1" checked>Very Poor
+<p><input type="radio" name="staff" value = "1">Very Poor
 <input type="radio" name="staff" value = "2">Poor
-<input type="radio" name="staff" value = "3">Average
+<input type="radio" name="staff" value = "3" checked>Average
 <input type="radio" name="staff" value = "4">Good
 <input type="radio" name="staff" value = "5">Very Good</p>
 <b>2. Avaibility of Facilities</b>
-<p><input type="radio" name="facilities" value = "1" checked>Very Poor
+<p><input type="radio" name="facilities" value = "1" >Very Poor
 <input type="radio" name="facilities" value = "2">Poor
-<input type="radio" name="facilities" value = "3">Average
+<input type="radio" name="facilities" value = "3" checked>Average
 <input type="radio" name="facilities" value = "4">Good
 <input type="radio" name="facilities" value = "5">Very Good</p>
 <b>3. Hygine</b>
-<p><input type="radio" name="hygine" value = "1" checked>Very Poor
+<p><input type="radio" name="hygine" value = "1" >Very Poor
 <input type="radio" name="hygine" value = "2">Poor
-<input type="radio" name="hygine" value = "3">Average
+<input type="radio" name="hygine" value = "3" checked>Average
 <input type="radio" name="hygine" value = "4">Good
 <input type="radio" name="hygine" value = "5">Very Good</p>
 <b>4. Food Quality</b>
-<p><input type="radio" name="food" value = "1" checked>Very Poor
+<p><input type="radio" name="food" value = "1" >Very Poor
 <input type="radio" name="food" value = "2">Poor
-<input type="radio" name="food" value = "3">Average
+<input type="radio" name="food" value = "3" checked>Average
 <input type="radio" name="food" value = "4">Good
 <input type="radio" name="food" value = "5">Very Good</p>
 <b>5. Avaibility of Doctors</b>
-<p><input type="radio" name="doctor" value = "1" checked>Very Poor
+<p><input type="radio" name="doctor" value = "1" >Very Poor
 <input type="radio" name="doctor" value = "2">Poor
-<input type="radio" name="doctor" value = "3">Average
+<input type="radio" name="doctor" value = "3" checked>Average
 <input type="radio" name="doctor" value = "4">Good
 <input type="radio" name="doctor" value = "5">Very Good</p>
 <b>6. Overall Rating</b>
-<p><input type="radio" name="overall" value = "1" checked>Very Poor
+<p><input type="radio" name="overall" value = "1" >Very Poor
 <input type="radio" name="overall" value = "2">Poor
-<input type="radio" name="overall" value = "3">Average
+<input type="radio" name="overall" value = "3" checked>Average
 <input type="radio" name="overall" value = "4">Good
 <input type="radio" name="overall" value = "5">Very Good</p>
 <br><br>
-<button class="button" type="submit">
+<button class="button" type="submit" name="submit">
 SUBMIT
 </button>
 <?php
-$dbhost = 'localhost:111';
+$dbhost = 'localhost:3306';
 $dbuser = 'root';
-$dbpass = 'Chunmun26';
+$dbpass = '';
 
 $con = mysqli_connect($dbhost,$dbuser,$dbpass);
 
 mysqli_select_db($con,'healthkit');
+if(isset($_POST['submit'])){
 $sql = "insert into feedback(a, b, c, d, e, f) values( '$staff','$facilities','$hygine','$food','$doctor','$overall')";
 mysqli_query($con,$sql);
+header('Location: submitted.php');
+}
 ?>
 </form>
 </div>

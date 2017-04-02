@@ -2,7 +2,7 @@
 <head>
 <style>
 .error {color: #FF0000;}
-
+a{text-decoration:none; }
 body {
     
     background-color: teal;
@@ -50,12 +50,16 @@ div {
 </head>
 <body>
 <?php
-
-
-
+$dbhost = 'localhost:3306';
+$dbuser = 'root';
+$dbpass = 'root';
+session_start();
+$con = mysql_connect($dbhost,$dbuser,$dbpass);
+mysql_select_db('healthkit');
 
 $nameErr = $emailErr = $healthErr = $contactErr = $passwordErr = "";
 $name = $email = $health = $contact = $password = "";
+$error=0;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (empty($_POST["name"])) {
@@ -76,6 +80,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
       $emailErr = "Invalid email format";
     }
+	else{
+	    $que = mysql_query("select email from health where email= '$email'");
+	    $cou = mysql_num_rows($que);
+		if($cou!=0)
+		{
+			$error = 1;
+			$errmsg = "Email is already registered";
+		}
+	}
   }
     
   if (empty($_POST["contact"])) {
@@ -89,16 +102,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
 
   if (empty($_POST["health"])) {
-    $health = "";
+    $healthErr = "Address is required";
   } else {
     $health = test_input($_POST["health"]);
   }
-  if(empty($_POST["passsword"])){
-    $passwordErr="Enter Password";
-  } else {
-     $password = test_input($_POST["password"]);
-	 
+  if(empty($_POST["password"])){
+    $passwordErr = "Password is required";
+	}
+	else
+	{
+		$password = test_input($_POST["password"]);
+	}
+if(empty($nameErr)&&empty($emailErr)&&empty($contactErr)&&empty($healthErr)&&empty($passwordErr))
+{
+  $sql="insert into health(name,email,address,contact,password) values('$name','$email','$health','$contact',md5('$password'))";
+  $result = mysql_query($sql,$con);
+  if($result){
+    $_SESSION["user"] = $name;
+    header('Location:registered.php');
   }
+}
 
 }
 	
@@ -112,27 +135,52 @@ function test_input($data) {
 ?>
 
 <div style="margin:auto">
-<h1>SIGN UP</h1>
+<h1 style="text-align:center;">SIGN UP</h1>
 <hr>
-<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-Health Center Name : <input type="text" name="name" size="40">
-<span class="error">* <?php echo $nameErr;?></span>
+<?php
+if($error)
+{
+	?>
+
+	<span class = "error"><?php echo $errmsg;?></span>
+	
+<?php
+}
+?>
+
+<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>
+
+Health Center Name: 
+<span class="error">* <?php echo $nameErr;?></span> 
+<input type="text" name="name" size="40">
+
 <br><br>
-E-mail:
-<input type="text" name="email">
+Specialization of Health Center: 
+<span class="error">* <?php echo $nameErr; ?></span>
+<input type="text" name="name" size="40">
+
+<br>
+E-mail Address:
 <span class="error">* <?php echo $emailErr;?></span>
-<br><br>
-Address:0
-<input type="text" name="health">
+<input type="text" name="email">
+
+<br>
+Address:
 <span class="error">*<?php echo $healthErr;?></span>
-<br><br>
-contact: <input type="text" name="contact">
+<input type="text" name="health">
+
+<br>
+Contact:
 <span class="error">*<?php echo $contactErr;?></span>
-<br><br>
-Password: <input type="password" name="password">
-<span class="error">* <?php echo $nameErr;?></span>
-<br><br>
+<input type="text" name="contact">
+
+<br>
+Password: 
+<span class="error">* <?php echo $passwordErr;?></span>
+<input type="password" name="password">
+<br>
 <input type="submit" name="submit" value="Submit">
+<p>Alredy registered?...<a href = "login.php">Sign in</a></p>
 </form>
 </div>
 <?php
